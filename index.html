@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Scroll_Bar</title>
+
+    <style>
+        #box{
+            width: 600px;
+            height: 400px;
+            overflow: hidden;
+             margin: 100px auto;
+            position: relative;
+            border: 2px solid cadetblue;
+        }
+        .content{
+            margin: 20px;
+            background-color: #cb986d;
+            width: 560px;
+            margin-top: 0;
+
+        }
+        .content>div{
+            padding: 0 30px;
+        }
+        .scroll{
+            position: absolute;
+            top: 40px;
+            right: 4px;
+            width: 16px;
+            height: 320px;
+            background-color: cornflowerblue;
+        }
+        .bar{
+            position: absolute;
+            width: 16px;
+            height: 30px;
+            border-radius: 20%;
+            background-color: red;
+            top: 0px;
+        }
+        img{
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+ <div id="box">
+        <div class="content">
+              <div class="text">
+                    Lorem ipsum do Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur fugit hic illum sequi? A at in incidunt laborum perspiciatis, quis quos? Ad delectus dolore enim fugit vitae. Ea laborum, nesciunt?lor sit amet, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis deserunt, dolor expedita hic illo ipsum minus non recusandae, reprehenderit rerum temporibus tenetur voluptatibus. Autem beatae cumque fugiat, officiis praesentium voluptatem. consectet Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet consequatur culpa ea est mollitia nesciunt sed voluptatibus? Adipisci autem est inventore mollitia placeat, porro quibusdam sunt. Amet eligendi in quod!ur adipisicing elit. Consequuntur maiores necessitatibus nulla quaerat rem soluta unde veritatis voluptatem! Accusantium consequatur dolor dolore dolores dolorum modi quaerat quasi repellendus sed vel.
+              </div>
+               <div class="pic">
+                     <image src="img/1.jpg"></image>
+               </div>
+            <div class="text">
+                Lorem ipsum do Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur fugit hic illum sequi? A at in incidunt laborum perspiciatis, quis quos? Ad delectus dolore enim fugit vitae. Ea laborum, nesciunt?lor sit amet, Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis deserunt, dolor expedita hic illo ipsum minus non recusandae, reprehenderit rerum temporibus tenetur voluptatibus. Autem beatae cumque fugiat, officiis praesentium voluptatem. consectet Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet consequatur culpa ea est mollitia nesciunt sed voluptatibus? Adipisci autem est inventore mollitia placeat, porro quibusdam sunt. Amet eligendi in quod!ur adipisicing elit. Consequuntur maiores necessitatibus nulla quaerat rem soluta unde veritatis voluptatem! Accusantium consequatur dolor dolore dolores dolorum modi quaerat quasi repellendus sed vel.
+            </div>
+
+        </div>
+       <div class="scroll">
+            <div class="bar"></div>
+       </div>
+ </div>
+ <script src="js/jquery-1.11.3.js"></script>
+ <script>
+     var oScroll = document.getElementsByClassName("scroll")[0];
+     var oBar = document.getElementsByClassName("bar")[0];
+     var oCon = document.getElementsByClassName("content")[0];
+     var oBox = document.getElementById("box");
+
+     //计算出小滑块能够滚动的最大值
+     var maxT = oScroll.offsetHeight - oBar.offsetHeight;
+
+     $(".bar").on("mousedown",function(ev){
+         var ev=ev||window.event;
+         var y=ev.clientY-this.offsetTop;
+//         var y=ev.clientY;
+          console.log(this.offsetTop);
+
+//          console.log(y) ;
+         document.onmousemove=function(ev) {
+              var t = ev.clientY - y;
+
+              if (t < 0) {
+                  t = 0;
+              } else if (t > maxT) {
+                  t = maxT;
+              }
+              oBar.style.top = t + "px";
+
+
+              //再等比例的改变内容区域块的margin-top值
+              var scale = t / maxT;
+              //oBox.clientHeight可视区域的高度
+              oCon.style.marginTop = -scale * (oCon.offsetHeight - oBox.clientHeight ) + "px";
+
+          }
+         //鼠标抬起解绑鼠标事件
+         document.onmouseup = function(){
+             document.onmousemove = null;
+             document.onmouseup = null;
+         }
+     })
+
+
+ </script>
+
+</body>
+</html>
